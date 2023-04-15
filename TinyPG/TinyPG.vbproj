@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C1353CEF-3352-45FC-983C-728DA1817B52}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>TinyPG</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>My.MyApplication</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MyType>WindowsForms</MyType>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\DlgFind.resx">
+      <DependentUpon>DlgFind.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TinyPG\MainForm.resx">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="AssemblyInfo.vb" />
+    <Compile Include="Forms\DlgFind.Designer.vb">
+      <DependentUpon>DlgFind.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DlgFind.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Global.vb" />
+    <None Include="app.config" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <Content Include="Templates\VB\Parser.vb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\VB\ParseTree.vb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\VB\Scanner.vb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\VB\TextHighlighter.vb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="PublicModules\PublicVariables.vb" />
+    <Compile Include="TinyPG\Debug\IParser.vb" />
+    <Compile Include="TinyPG\Compiler\Compiler.vb" />
+    <Compile Include="TinyPG\CodeGenerators\ICodeGenerator.vb" />
+    <Compile Include="TinyPG\CodeGenerators\VBNet\ParseTreeGenerator.vb" />
+    <Compile Include="TinyPG\Compiler\Symbol.vb" />
+    <Compile Include="TinyPG\Compiler\NonTerminalSymbol.vb" />
+    <Compile Include="TinyPG\CodeGenerators\CSharp\TextHighlighterGenerator.vb" />
+    <Compile Include="TinyPG\CodeGenerators\CSharp\ParseTreeGenerator.vb" />
+    <Compile Include="TinyPG\Compiler\Symbols.vb" />
+    <Compile Include="TinyPG\Compiler\SymbolAttributes.vb" />
+    <Compile Include="TinyPG\ParseErrors.vb" />
+    <Compile Include="TinyPG\ParseError.vb" />
+    <Compile Include="TinyPG\ParseNode.vb" />
+    <Compile Include="TinyPG\ParseTree.vb" />
+    <Compile Include="TinyPG\Controls\RegExControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Controls\TabControlEx.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Controls\IFloaty.vb" />
+    <Compile Include="TinyPG\Controls\Floaty.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Controls\Floaties.vb" />
+    <Compile Include="TinyPG\Compiler\TerminalSymbol.vb" />
+    <Compile Include="TinyPG\Compiler\CompilerResult.vb" />
+    <Compile Include="TinyPG\Controls\TextMarker.vb" />
+    <Compile Include="TinyPG\Controls\HeaderLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Controls\AutoComplete.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Parser.vb" />
+    <Compile Include="TinyPG\Highlighter\Scanner.vb" />
+    <Compile Include="TinyPG\Highlighter\TokenType.vb" />
+    <Compile Include="TinyPG\Highlighter\Token.vb" />
+    <Compile Include="TinyPG\Controls\AssemblyInfo.vb" />
+    <Compile Include="System\Text\Helper.vb" />
+    <Compile Include="TinyPG\Scanner.vb" />
+    <Compile Include="TinyPG\TokenType.vb" />
+    <Compile Include="TinyPG\Token.vb" />
+    <Compile Include="TinyPG\Compiler\GrammarNode.vb" />
+    <Compile Include="TinyPG\Compiler\GrammarTree.vb" />
+    <Compile Include="TinyPG\Debug\IParseError.vb" />
+    <Compile Include="TinyPG\Debug\IParseNode.vb" />
+    <Compile Include="TinyPG\Debug\IParseTree.vb" />
+    <Compile Include="TinyPG\Highlighter\ContextSwitchEventArgs.vb" />
+    <Compile Include="TinyPG\Highlighter\ContextSwitchEventHandler.vb" />
+    <Compile Include="TinyPG\Highlighter\TextHighlighter.vb" />
+    <Compile Include="TinyPG\Compiler\RuleType.vb" />
+    <Compile Include="TinyPG\Compiler\Rules.vb" />
+    <Compile Include="TinyPG\Compiler\Rule.vb" />
+    <Compile Include="TinyPG\MainForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Compiler\Directives.vb" />
+    <Compile Include="TinyPG\Compiler\Directive.vb" />
+    <Compile Include="TinyPG\Compiler\Grammar.vb" />
+    <Compile Include="TinyPG\Highlighter\ParseErrors.vb" />
+    <Compile Include="TinyPG\Highlighter\ParseError.vb" />
+    <Compile Include="TinyPG\Highlighter\ParseNode.vb" />
+    <Compile Include="TinyPG\Highlighter\ParseTree.vb" />
+    <Compile Include="TinyPG\Controls\Overlay.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Controls\DockExtender.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TinyPG\Controls\DockState.vb" />
+    <Compile Include="TinyPG\CodeGenerators\VBNet\TextHighlighterGenerator.vb" />
+    <Compile Include="TinyPG\CodeGenerators\CSharp\ScannerGenerator.vb" />
+    <Compile Include="TinyPG\Properties\Resources.vb" />
+    <Compile Include="TinyPG\Highlighter\Parser.vb" />
+    <Compile Include="TinyPG\Program.vb" />
+    <Compile Include="TinyPG\ParseTreeViewer.vb" />
+    <Compile Include="TinyPG\Debug\IToken.vb" />
+    <Compile Include="TinyPG\CodeGenerators\CSharp\ParserGenerator.vb" />
+    <Compile Include="TinyPG\SyntaxChecker.vb" />
+    <Compile Include="TinyPG\CodeGenerators\VBNet\ScannerGenerator.vb" />
+    <Compile Include="TinyPG\CodeGenerators\VBNet\ParserGenerator.vb" />
+    <Compile Include="TinyPG\CodeGenerators\SupportedLanguage.vb" />
+    <Compile Include="TinyPG\CodeGenerators\CodeGeneratorFactory.vb" />
+    <EmbeddedResource Include="TinyPG.Controls.RegExControl.resources" />
+    <EmbeddedResource Include="TinyPG.Properties.Resources.resources" />
+    <EmbeddedResource Include="TinyPG.Controls.AutoComplete.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\C#\Parser.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\C#\ParseTree.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\C#\Scanner.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\C#\TextHighlighter.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>
