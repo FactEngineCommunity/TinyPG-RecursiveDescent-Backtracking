@@ -1,6 +1,5 @@
 // 
-
-<% @TinyPG Namespace="VAQL" Language="vb"%>
+<% @TinyPG Namespace="JSON" Language="vb"%>
 <% @TextHighlighter Generate="true" %>
 
 [Color(153, 0, 0)] COLON -> @":";
