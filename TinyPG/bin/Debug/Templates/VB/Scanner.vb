@@ -4,6 +4,8 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
+Imports System.Threading.Tasks
+
 <%Imports%>
 
 Namespace <%Namespace%>
@@ -110,12 +112,32 @@ Namespace <%Namespace%>
 
                 For i = 0 To scantokens.Count - 1
                     Dim r As Regex = Patterns(scantokens(i))
-                    Dim m As Match = r.Match(m_input)
-                    If m.Success AndAlso m.Index = 0 AndAlso ((m.Length > len) OrElse (scantokens(i) < index AndAlso m.Length = len)) Then
-                        len = m.Length
+                    Dim timeoutDuration As Integer = 10 ' Adjust as needed
+
+                    Dim cts As New System.Threading.CancellationTokenSource()
+                    Dim matchingTask = System.Threading.Tasks.Task.Run(
+                                                                    Function()
+                                                                        Return r.Match(m_input)
+                                                                    End Function, cts.Token)
+
+                    If Not matchingTask.Wait(timeoutDuration, cts.Token) Then
+                        ' Handle the timeout scenario
+                        cts.Cancel()
+                    ElseIf matchingTask.Result.Success AndAlso matchingTask.Result.Index = 0 AndAlso ((matchingTask.Result.Length > len) OrElse (scantokens(i) < index AndAlso matchingTask.Result.Length = len)) Then
+                        ' Pattern matched successfully, handle the result
+                        'Dim m As Match = r.Match(m_input)
+                        len = matchingTask.Result.Length
                         index = scantokens(i)
                         Exit For
                     End If
+
+                    '20230820-VM-Was
+                    ''Dim m As Match = r.Match(m_input)
+                    'If m.Success AndAlso m.Index = 0 AndAlso ((m.Length > len) OrElse (scantokens(i) < index AndAlso m.Length = len)) Then
+                    '    len = m.Length
+                    '    index = scantokens(i)
+                    '    Exit For
+                    'End If
                 Next i
 
                 If index >= 0 AndAlso len >= 0 Then

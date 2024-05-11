@@ -13,16 +13,29 @@ Namespace <%Namespace%>
         Private max_tree As ParseTree
         Public MaxDistance As Integer 'The maximum distance the parser got within the input text.
 
+        'To stop multiple threads parsing at once.
+        Private LockObject As New Object
+
         Public Sub New(ByVal scanner As Scanner)
             m_scanner = scanner
         End Sub
 
 
-    Public Function Parse(ByVal input As String) As <%IParseTree%>
+        Public Function Parse(ByVal input As String) As <%IParseTree%>
             m_tree = New ParseTree()
             'Return Parse(input, m_tree)  '20210810-VM-Was this, changed to max_tree below
             max_tree = New ParseTree 'Added, as above.
-            Return Parse(input, max_tree) 'Added, as above.
+
+            If System.Threading.Monitor.TryEnter(Me.LockObject) Then
+                Try
+                    Return Parse(input, max_tree) 'Added, as above.
+                Finally
+                    System.Threading.Monitor.Exit(Me.LockObject)
+                End Try
+            Else
+                Return max_tree
+            End If
+
         End Function
 
         Public Function Parse(ByVal input As String, ByVal tree As ParseTree) As ParseTree
@@ -31,11 +44,14 @@ Namespace <%Namespace%>
             m_tree = tree
             ParseStart(m_tree)
             m_tree.Skipped = m_scanner.Skipped
+            Me.max_tree.Errors = m_tree.Errors '20231225-VM-Added. Was not returning errors if first production failed.
             Return Me.max_tree 'm_tree '20210810-VM-Added max_tree, commented out m_tree
         End Function
 
-<%ParseNonTerminals%>
+        <%ParseNonTerminals%>
+
     End Class
+
 #End Region
 End Namespace
 

@@ -8,6 +8,8 @@ Imports System.Xml.Serialization
 <%Imports%>
 
 Namespace <%Namespace%>
+
+
 #Region "ParseTree"
     <Serializable()>
     Public Class ParseErrors
@@ -103,7 +105,24 @@ Namespace <%Namespace%>
         End Sub
 
         Public Sub New(ByVal message As String, ByVal code As Integer, ByVal node As ParseNode)
-            Me.New(message, code, 0, node.Token.StartPos, node.Token.StartPos, node.Token.Length)
+            If node Is Nothing Then
+                m_message = message
+                m_code = code
+                m_line = 0
+                m_col = 0
+                m_pos = 0
+                m_length = 0
+                m_expected_token = ""
+            Else
+                m_message = message
+                m_code = code
+                m_line = 0
+                m_col = node.Token.StartPos
+                m_pos = node.Token.EndPos
+                m_length = node.Token.Length
+                m_expected_token = ""
+            End If
+
         End Sub
 
         Public Function Clone() As Object Implements ICloneable.Clone

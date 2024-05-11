@@ -92,6 +92,7 @@ Namespace TinyPG.Compiler
             Dim compilerresult As New CompilerResult
             Dim output As String = Nothing
             If (Me.assembly Is Nothing) Then
+                Throw New Exception("Assembly is nothing in Compiler")
                 Return Nothing
             End If
             Dim scannerinstance As Object = Me.assembly.CreateInstance("TinyPG.Debug.Scanner")
@@ -104,13 +105,13 @@ Namespace TinyPG.Compiler
             Dim errors As List(Of IParseError) = DirectCast(treeinstance.GetType.InvokeMember("Errors", BindingFlags.GetField, Nothing, treeinstance, Nothing), List(Of IParseError))
             If errors.Count = 0 Then
                 If ((Not textHighlight Is Nothing) AndAlso (errors.Count = 0)) Then
-                    Dim highlighterinstance As Object = Me.assembly.CreateInstance("TinyPG.Debug.TextHighlighter", True, BindingFlags.CreateInstance, Nothing, New Object() {textHighlight, scannerinstance, parserinstance}, Nothing, Nothing)
+                    Dim highlighterinstance As Object = Me.assembly.CreateInstance("TinyPG.Debug.TextHighlighter", True, BindingFlags.CreateInstance, Nothing, New Object() {textHighlight, scannerinstance, parserinstance, True}, Nothing, Nothing)
                     If (Not highlighterinstance Is Nothing) Then
                         output = (output & "Highlighting input..." & ChrW(13) & ChrW(10))
                         Dim highlightertype As Type = highlighterinstance.GetType
 
                         highlightertype.InvokeMember("HighlightText", BindingFlags.InvokeMethod, Nothing, highlighterinstance, Nothing)
-                        Thread.Sleep(20)
+                        Thread.Sleep(200)
                         highlightertype.InvokeMember("Dispose", BindingFlags.InvokeMethod, Nothing, highlighterinstance, Nothing)
                     End If
                 End If

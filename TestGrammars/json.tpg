@@ -1,0 +1,38 @@
+// 
+
+<% @TinyPG Namespace="VAQL" Language="vb"%>
+<% @TextHighlighter Generate="true" %>
+
+[Color(153, 0, 0)] COLON -> @":";
+[Color(153, 0, 0)] COMMA -> @",";
+DOUBLEQUOTE   -> @"""";
+EOF           -> @"^$";
+NUMBER 	-> @"[0-9]+";
+[Color(153, 0, 0)]	VALUE         -> @"[aA-zZ0-9\-\s+\#\*\?]*";
+
+//[Color(153, 76, 0)] NUMBER           -> @"-? ('0' | [1-9][0-9]*) ('\.' [0-9]+)? ([Ee] [+-]? [0-9]+)?";
+//[Color(53, 00, 00)] STRING           -> @"[aA-zZ0-9\-\s+\#\*\?]*";
+[Color(76, 153, 0)] JSONTRUE             -> @"true";
+[Color(153, 0, 153)] JSONFALSE           -> @"false";
+[Color(153, 76, 0)] JSONNULL             -> @"null";
+[Color(153, 0, 0)] LEFTBRACE        -> @"\{";
+[Color(153, 0, 0)] RIGHTBRACE       -> @"\}";
+[Color(153, 0, 0)] LEFTBRACKET -> @"\[";
+[Color(153, 0, 0)] RIGHTBRACKET -> @"\]";
+
+JSONSTRING -> DOUBLEQUOTE VALUE DOUBLEQUOTE;
+JSONNUMBER -> NUMBER;
+
+JSONVALUE               -> (JSONSTRING | JSONNUMBER | JSONOBJECT | JSONARRAY | JSONTRUE | JSONFALSE | JSONNULL);
+JSON                -> JSONVALUE;
+MEMBERS             -> JSONPAIR (COMMA JSONPAIR)*;
+JSONOBJECT              -> LEFTBRACE MEMBERS? RIGHTBRACE;
+JSONPAIR                -> JSONSTRING COLON JSONVALUE;
+JSONARRAY               -> LEFTBRACKET JSONELEMENTS? RIGHTBRACKET;
+JSONELEMENTS            -> JSONVALUE (COMMA JSONVALUE)*;
+
+[Skip] WHITESPACE    -> @"\s+";
+
+Start 		 -> 
+                  JSON
+ EOF;
